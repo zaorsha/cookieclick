@@ -25,25 +25,36 @@ click_btn_text_colour = white
 click_btn_shape = pygame.Rect(300, 250, 200, 50)
 font = pygame.font.Font(None, 36)
 
-# Function to render text
+# Text to show amount of clicks
+clicks = 0
+keys = pygame.key.get_pressed()
+
+# Function to render text on button
 def render_text(text, font, colour, center):
     text_surface = font.render(text, True, colour)
     text_rect = text_surface.get_rect(center=center)
     return text_surface, text_rect
 
-
 # Game loop
 run_game = True
 while run_game:
 
+    screen.fill(black)
+
+    click_text = font.render(f'Clicks: {clicks}', True, click_btn_text_colour)
+
     # Get mouse position
     mouse_pos = pygame.mouse.get_pos()
+
+    screen.blit(click_text, (50, 50))
 
     # Change Click Button colour on hover
     if click_btn_shape.collidepoint(mouse_pos):
         click_btn_current_colour = click_btn_hover
     else:
         click_btn_current_colour = click_btn_colour
+
+    print(clicks)
 
     # Draw Click Button
     pygame.draw.rect(screen, click_btn_current_colour, click_btn_shape)
@@ -56,6 +67,9 @@ while run_game:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run_game = False
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            if click_btn_shape.collidepoint(mouse_pos):
+                clicks += 1
 
     # Update the display
     pygame.display.flip()
