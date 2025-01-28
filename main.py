@@ -54,8 +54,6 @@ while run_game:
     else:
         click_btn_current_colour = click_btn_colour
 
-    print(clicks)
-
     # Draw Click Button
     pygame.draw.rect(screen, click_btn_current_colour, click_btn_shape)
 
